@@ -97,14 +97,16 @@
 <div id="app" style="display:none;">
   <div class="shell">
     <script type="module">
-      import { BrowserMultiFormatReader, DecodeHintType, BarcodeFormat } from "https://cdn.jsdelivr.net/npm/@zxing/browser@0.1.5/+esm";
-      const hints = new Map();
-      hints.set(DecodeHintType.POSSIBLE_FORMATS, [BarcodeFormat.QR_CODE, BarcodeFormat.CODE_128, BarcodeFormat.CODE_39, BarcodeFormat.EAN_13, BarcodeFormat.EAN_8]);
-      hints.set(DecodeHintType.TRY_HARDER, true);
-      window.ZXingBrowser = { BrowserMultiFormatReader, DecodeHintType, hints };
-      console.log("ZXing loaded");
+      import {
+        BrowserMultiFormatReader,
+        BrowserCodeReader
+      } from "https://cdn.jsdelivr.net/npm/@zxing/browser@0.1.5/+esm";
+    
+      import {
+        DecodeHintType,
+        BarcodeFormat
+      } from "https://cdn.jsdelivr.net/npm/@zxing/library@0.21.0/+esm";
 
-  // ---- build hints ----
   const hints = new Map();
   hints.set(DecodeHintType.POSSIBLE_FORMATS, [
     BarcodeFormat.QR_CODE,
