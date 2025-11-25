@@ -58,6 +58,12 @@
     #video { width:100%; background:#000; aspect-ratio:3/4; object-fit:cover }
     .modal .bar { display:flex; gap:8px; padding:10px; background:#0f172a; color:#fff; align-items:center; justify-content:space-between }
     .modal .bar .btn { border-radius:8px; padding:8px 10px; }
+    .logout-fixed {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 1000;
+    }
   </style>
 </head>
 <body>
@@ -120,7 +126,9 @@
   <div class="shell">
       <h2>Hello, <span id="userName"></span>!</h2>
       <p>Welcome to use Allion inventory app</p>
-      <button class="btn ghost" onclick="logout()">Log out</button>
+      <button class="btn ghost" onclick="logout()" style="margin-top:8px;">
+        Log out (<span id="userName"></span>)
+      </button>
    <div class="card" id="home">
       <h1>Borrow / Return / Inventory</h1>
       <p class="muted">Choose an action</p>
