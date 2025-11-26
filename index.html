@@ -84,7 +84,7 @@
 </div>
 
 <!-- =============== BLOCKED SCREEN =============== -->
-  <div id="blockedScreen" style="display:none; min-height:100vh; align-items:center; justify-content:center; padding:20px;">
+  <div id="blockedScreen" style="display:none; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px;">
   <div class="card" style="color:#dc2626;">
     <h2>Not Authorized</h2>
     <p>Your account does not have edit access to the log spreadsheet.<br>Contact the administrator to be added to the authorized Google Group.</p>
@@ -263,23 +263,36 @@ async function handleCredentialResponse(response) {
       headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({
         action: 'login-test',
-        email: payload.email  // 👈 send email
+        email: payload.email   // 👈 send email
       })
     });
 
-    const result = await resp.json();
+    const text = await resp.text();
+    console.log('login-test raw response:', text);
+
+    let result;
+    try {
+      result = JSON.parse(text);
+    } catch (err) {
+      console.error('JSON parse failed', err);
+      showBlocked();   // any non-JSON → treat as blocked
+      return;
+    }
 
     if (result.status === 'authorized') {
       localStorage.setItem('inventoryAppUser', JSON.stringify(payload));
       showApp(payload);
     } else {
+      console.warn('Backend says NOT authorized:', result);
       showBlocked();
     }
+
   } catch (e) {
-    console.error(e);
+    console.error('login-test fetch failed', e);
     showBlocked();
   }
 }
+
 
 
 
