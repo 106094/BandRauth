@@ -131,45 +131,50 @@
 
       console.log("ZXing 0.1.5 + hints loaded");
     </script>
-    <!-- Header -->
+  
+  <div class="shell">
     <div class="card" id="home">
-      <div class="flex-between">
+      <!-- Header with title left + logout right -->
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
         <div>
           <h1>Borrow / Return / Inventory</h1>
-          <p class="muted">Hello, <strong id="userName"></strong>!</p>
+          <p class="muted">Hello, <span id="userName" style="font-weight:600;"></span>!</p>
+          <p class="muted">Choose an action</p>
         </div>
-        <button class="btn ghost" onclick="logout()">Log out</button>
+    
+        <button class="btn ghost" onclick="logout()">
+          Log out
+        </button>
       </div>
-
-      <p class="muted">Choose an action</p>
-      <div class="row" style="margin-top:20px;">
+    
+      <!-- Action buttons -->
+      <div class="row" style="margin-top:12px; gap:12px;">
         <button class="btn primary full" onclick="openForm('Borrow')">Borrow</button>
         <button class="btn ghost full" onclick="openForm('Return')">Return</button>
         <button class="btn ghost full" onclick="openForm('Inventory')">Inventory</button>
       </div>
     </div>
-
-    <!-- Form -->
-    <div class="card" id="formCard" style="display:none; margin-top:16px;">
-      <h2 id="formTitle"></h2>
-      <div style="margin-top:16px;">
+    
+    <div class="card" id="formCard" style="display:none; margin-top:16px">
+      <h2 id="formTitle">Form</h2>
+      <div class="grid" style="margin-top:12px">
         <div><label>Date</label><input id="date" type="text" readonly></div>
-        <div><label>Name</label>
-          <div class="field">
-            <input id="name" type="text" placeholder="Tap or scan name">
-            <button class="icon-btn" onclick="openScanner('name')">📷</button>
-          </div>
+        <div><label>Name</label></div>
+        <div class="field">
+          <input id="name" type="text" placeholder="Scan or type a name">
+           <button class="icon-btn" aria-label="Scan name" onclick="openScanner('name')">📷</button>
         </div>
-        <div style="margin-top:16px;">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <label>Property ID(s)</label>
+        <div>
+          <div class="row" style="align-items:center; justify-content:space-between">
+            <label style="margin:0">Property ID(s)</label>
             <button class="btn ghost" onclick="addPropertyRow()">+ Add line</button>
           </div>
-          <div id="props" style="margin-top:8px;"></div>
+          <div id="props" class="grid" style="margin-top:8px"></div>
         </div>
-        <div style="margin-top:24px; display:flex; gap:12px;">
+        <div class="divider"></div>
+        <div class="row">
           <button class="btn full" onclick="goHome()">Back</button>
-          <button class="btn primary full" onclick="submitForm()">Submit</button>
+          <button class="btn primary full" onclick="submitForm()">Confirm / Submit</button>
         </div>
       </div>
     </div>
