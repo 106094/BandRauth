@@ -263,19 +263,32 @@ async function handleCredentialResponse(response) {
       headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({ action: 'login-test' })
     });
-    const result = await resp.json();
+
+    const text = await resp.text();
+    console.log('login-test raw response:', text);
+
+    let result;
+    try {
+      result = JSON.parse(text);
+    } catch (err) {
+      console.error('JSON parse failed', err);
+      showBlocked();
+      return;
+    }
 
     if (result.status === 'authorized') {
       localStorage.setItem('inventoryAppUser', JSON.stringify(payload));
       showApp(payload);
     } else {
+      console.warn('Backend said NOT authorized:', result);
       showBlocked();
     }
   } catch (e) {
-    console.error(e);
+    console.error('login-test fetch failed', e);
     showBlocked();
   }
 }
+
 
 // ================== APP LOGIC (your existing code – cleaned) ==================
 let mode = '', codeReader = null, currentInputEl = null, torchOn = false;
