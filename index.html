@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Borrow / Return / Inventory</title>
-    <style>
+  <style>
     :root { --primary:#4f46e5; --bg:#0b0c10; --card:#ffffff; }
     body { margin:0; font: 16px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background:#f5f7fb; }
     .shell { max-width:680px; margin:0 auto; padding:20px; }
@@ -58,82 +58,77 @@
     #video { width:100%; background:#000; aspect-ratio:3/4; object-fit:cover }
     .modal .bar { display:flex; gap:8px; padding:10px; background:#0f172a; color:#fff; align-items:center; justify-content:space-between }
     .modal .bar .btn { border-radius:8px; padding:8px 10px; }
-    .center-screen {
-        min-height:100vh;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        padding:20px;
-      }
   </style>
 </head>
 <body>
+<!-- ============================================= -->
+<!--  GOOGLE SIGN-IN + AUTHORIZATION (embedded) -->
+<!-- ============================================= -->
+<div id="loginScreen">
+  <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px;">
+    <div class="card" style="text-align:center; max-width:400px; width:100%;">
+      <h1>Borrow / Return / Inventory</h1>
+      <p class="muted">Please sign in with your Google account</p>
 
-<!-- =============== LOGIN SCREEN =============== -->
-<script src="https://accounts.google.com/gsi/client" async defer onload="handleClientLoad()"></script>
-<script src="https://apis.google.com/js/api.js"></script>
+      <div style="margin:30px 0;">
+        <div class="g_id_signin"
+             data-type="standard"
+             data-size="large"
+             data-theme="outline"
+             data-text="signin_with"
+             data-shape="rectangular">
+        </div>
+      </div>
 
-  <div id="loginScreen">
-  <div class="card">
-    <h1>Borrow / Return / Inventory</h1>
-    <p class="muted">Sign in to continue</p>
-
-    <!-- This MUST exist: -->
-    <div id="buttonDiv"
-         style="margin:30px auto; padding:12px 20px; border-radius:8px; background:#4f46e5; color:#fff; text-align:center;">
+      <p style="font-size:13px; color:#6b7280;">Only authorized emails can access this tool</p>
     </div>
   </div>
 </div>
-  
-<!-- =============== BLOCKED SCREEN =============== -->
-<div id="blockedScreen"
-     style="display:none; min-height:100vh; align-items:center; justify-content:center; padding:20px;">
-  <div class="card" style="color:#dc2626;">
-    <h2>Not Authorized</h2>
-    <p>Your account does not have edit access to the log spreadsheet.<br>
-       Contact the administrator to be added to the authorized Google Group.</p>
-    <button class="btn ghost" onclick="location.reload()">Try again</button>
+
+<div id="blockedScreen" style="display:none; text-align:center; padding:60px 20px; color:#dc2626;">
+  <div class="shell">
+    <h2>Sorry</h2>
+    <p>Your email is not on the authorized list.<br>Contact the admin to be added.</p>
+    <button class="btn ghost" onclick="location.reload()">Try Again</button>
   </div>
 </div>
 
-<!-- =============== MAIN APP =============== -->
+<!-- Your entire existing app content goes here (unchanged) -->
 <div id="app" style="display:none;">
   <div class="shell">
-
-    <!-- ZXing Barcode Scanner (module) -->
-        <script type="module">
-          import {
-            BrowserMultiFormatReader,
-            BrowserCodeReader
-          } from "https://cdn.jsdelivr.net/npm/@zxing/browser@0.1.5/+esm";
-        
-          import {
-            DecodeHintType,
-            BarcodeFormat
-          } from "https://cdn.jsdelivr.net/npm/@zxing/library@0.21.0/+esm";
-
-      const hints = new Map();
-      hints.set(DecodeHintType.POSSIBLE_FORMATS, [
-        BarcodeFormat.QR_CODE,
-        BarcodeFormat.CODE_128,
-        BarcodeFormat.CODE_39,
-        BarcodeFormat.EAN_13,
-        BarcodeFormat.EAN_8
-      ]);
-      hints.set(DecodeHintType.TRY_HARDER, true);
-
-      // ---- expose global ----
-      window.ZXingBrowser = {
+    <script type="module">
+      import {
         BrowserMultiFormatReader,
-        BrowserCodeReader,
+        BrowserCodeReader
+      } from "https://cdn.jsdelivr.net/npm/@zxing/browser@0.1.5/+esm";
+    
+      import {
         DecodeHintType,
-        BarcodeFormat,
-        hints
-      };
+        BarcodeFormat
+      } from "https://cdn.jsdelivr.net/npm/@zxing/library@0.21.0/+esm";
 
-      console.log("ZXing 0.1.5 + hints loaded");
-    </script>
-  
+  const hints = new Map();
+  hints.set(DecodeHintType.POSSIBLE_FORMATS, [
+    BarcodeFormat.QR_CODE,
+    BarcodeFormat.CODE_128,
+    BarcodeFormat.CODE_39,
+    BarcodeFormat.EAN_13,
+    BarcodeFormat.EAN_8
+  ]);
+  hints.set(DecodeHintType.TRY_HARDER, true);
+
+  // ---- expose global ----
+  window.ZXingBrowser = {
+    BrowserMultiFormatReader,
+    BrowserCodeReader,
+    DecodeHintType,
+    BarcodeFormat,
+    hints
+  };
+
+  console.log("ZXing 0.1.5 + hints loaded");
+</script>
+    
   <div class="shell">
     <div class="card" id="home">
       <!-- Header with title left + logout right -->
@@ -197,108 +192,10 @@
     </div>
 
   <div class="toast" id="toast"></div>
-</div>
 
 <script>
-// ================== CONFIG ==================          
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxxzwLaLKmP0ixib-GxiaKOvT8l_-0ZeIeJXOWyhktqEqaROAc_QeVKjTWclgFL-gWweA/exec';
-const SHEET_ID   = '1AQ4cvZ_SjbIkW-ZwJz2QbB_67Sepo4RUUtlkyNGsutE';
-
-let tokenClient;
-let currentUser = null;
-  
-function handleClientLoad() {
-  document.getElementById('loginBtn').onclick = () => tokenClient.requestAccessToken();
-}
-  
-function showApp(user) {
-  currentUser = user;
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  document.getElementById('userName').textContent = user.name || user.email.split('@')[0];
-}
-
-function showBlocked() {
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('blockedScreen').style.display = 'flex';
-}
-
-function logout() {
-  const token = localStorage.getItem('sheetsToken');
-  if (token) google.accounts.oauth2.revoke(token);
-  localStorage.clear();
-  location.reload();
-}
-
-function handleClientLoad() {
-  const savedUser  = localStorage.getItem('inventoryAppUser');
-  const savedToken = localStorage.getItem('sheetsToken');
-
-  if (savedUser && savedToken) {
-    showApp(JSON.parse(savedUser));
-    return;
-  }
-
-  // use a normal button; no google.accounts.id here
-  const btn = document.getElementById('buttonDiv');
-  btn.textContent = 'Sign in with Google';
-  btn.style.cursor = 'pointer';
-
-  tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: '941275028852-6d7m0cbgpa67vvhrsspgcn0a81m03hc9.apps.googleusercontent.com',
-    scope: 'https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
-    callback: async (resp) => {
-      if (resp.error || !resp.access_token) {
-        console.error('Token error', resp);
-        showBlocked();
-        return;
-      }
-
-      try {
-        // 1. get user info
-        const userInfoResp = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-          headers: { Authorization: `Bearer ${resp.access_token}` }
-        });
-        const userInfo = await userInfoResp.json();
-        const email = userInfo.email;
-        const name  = userInfo.name || (email ? email.split('@')[0] : 'Unknown');
-
-        // 2. try to append login record to access_log
-        const loginRow = [[new Date().toISOString(), email, name, 'login-attempt']];
-
-        const logResponse = await fetch(
-          `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/access_log!A1:append?valueInputOption=RAW`,
-          {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${resp.access_token}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ values: loginRow })
-          }
-        );
-
-        if (logResponse.ok) {
-          // authorized
-          const user = { email, name };
-          localStorage.setItem('inventoryAppUser', JSON.stringify(user));
-          localStorage.setItem('sheetsToken', resp.access_token);
-          showApp(user);
-        } else {
-          // not authorized (or other Sheets error)
-          const err = await logResponse.json().catch(() => ({}));
-          console.log('Access denied / Sheets error:', err);
-          showBlocked();
-        }
-      } catch (e) {
-        console.error('Login flow failed:', e);
-        showBlocked();
-      }
-    },
-  });
-
-  btn.onclick = () => tokenClient.requestAccessToken();
-}
+/** ====== CONFIG ====== */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzoZUVTfbtIAgnyjNm2feyn7rZtIRwxzG9dwUwBvVSlJIet0dVv9wIFTsRRu9nL1pO1dA/exec'; 
 
 /** ====== STATE ====== */
 let mode = 'Borrow';
@@ -515,6 +412,90 @@ async function openScanner(targetId=null, directInputEl=null) {
     toast(`Camera error: ${e.name || 'Error'} — ${e.message || e}`);
   }
 } 
+</script>
+
+  </div>
+</div>
+
+<!-- Google Platform Library -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<script>
+// ==================== CONFIGURATION ====================
+  const SHEET_ID        = '1AQ4cvZ_SjbIkW-ZwJz2QbB_67Sepo4RUUtlkyNGsutE'; 
+  const CLIENT_ID       = '941275028852-6d7m0cbgpa67vvhrsspgcn0a81m03hc9.apps.googleusercontent.com';
+  const SHEET_NAME= 'authnames'
+  const RANGE   = 'A:A';        // change sheet name if needed
+// =====================================================
+
+function parseCsvToEmails(csvText) {
+  return csvText
+    .split('\n')
+    .flatMap(line => line.split(','))
+    .map(e => e.replace(/"/g, '').trim().toLowerCase())
+    .filter(Boolean);
+}
+
+function showApp(user) {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  if (user) document.getElementById('userName').textContent = user.name || user.email;
+}
+
+function showBlocked() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('blockedScreen').style.display = 'block';
+}
+
+function logout() {
+  localStorage.removeItem('inventoryAppUser');
+  location.reload();
+}
+
+// Check if user was already authorized (bypass login forever)
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('inventoryAppUser');
+  if (saved) {
+    const user = JSON.parse(saved);
+    showApp(user);
+    return; // Skip login completely
+  }
+
+  // Initialize Google Sign-In
+  google.accounts.id.initialize({
+    client_id: CLIENT_ID,
+    callback: handleCredentialResponse,
+    auto_select: false
+  });
+
+  google.accounts.id.renderButton(
+    document.querySelector('.g_id_signin'),
+    { theme: "outline", size: "large" }
+  );
+});
+
+async function handleCredentialResponse(response) {
+  const payload = JSON.parse(atob(response.credential.split('.')[1]));
+  const email = payload.email.toLowerCase();
+
+  // Build safe URL (handles & , spaces in sheet name)
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_NAME)}&range=${RANGE}`;
+  
+  try {
+    const csv = await fetch(url).then(r => r.text());
+    const allowedEmails = parseCsvToEmails(csv);
+
+    if (allowedEmails.includes(email)) {
+      localStorage.setItem('inventoryAppUser', JSON.stringify(payload)); // Remember forever
+      showApp(payload);
+    } else {
+      showBlocked();
+    }
+  } catch (e) {
+    console.error('Auth error:', e);
+    alert('Error checking authorization. Check Sheet sharing or internet.');
+  }
+}
 </script>
 </body>
 </html>
