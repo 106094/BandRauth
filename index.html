@@ -180,19 +180,19 @@
     </div>
   </div>
 
-  <!-- Scanner Modal -->
-  <div class="modal" id="scannerModal">
-    <div class="sheet">
-      <video id="video" width="100%" autoplay playsinline muted></video>
-      <div class="bar">
-        <div>Point camera at code…</div>
-        <div>
-          <button class="btn" onclick="toggleTorch()">Torch</button>
-          <button class="btn" onclick="closeScanner()">Close</button>
+  <!-- Scanner modal -->
+  <div class="modal" id="scannerModal" role="dialog">
+      <div class="sheet">
+        <video id="video" autoplay playsinline muted></video>
+        <div class="bar">
+          <div>Point camera at a QR code…</div>
+          <div>
+            <button class="btn" onclick="toggleTorch()">Torch</button>
+            <button class="btn" onclick="closeScanner()">Close</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
   <div class="toast" id="toast"></div>
 </div>
