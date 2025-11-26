@@ -91,14 +91,53 @@
   </div>
 </div>
 
-<div id="blockedScreen" style="display:none; text-align:center; padding:60px 20px; color:#dc2626;">
-  <div class="shell">
-    <h2>Sorry</h2>
-    <p>Your email is not on the authorized list.<br>Contact the admin to be added.</p>
-    <button class="btn ghost" onclick="location.reload()">Try Again</button>
+<!-- =============== BLOCKED / NOT AUTHORIZED SCREEN =============== -->
+<div id="blockedScreen" style="display:none; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; background:#fef2f2;">
+  <div class="card" style="text-align:center; max-width:500px; color:#dc2626;">
+    <h2 style="font-size:28px; margin-bottom:16px;">Access Denied</h2>
+    
+    <p style="font-size:16px; line-height:1.6; margin:20px 0; color:#4b5563;">
+      Your Google account does not have edit permission on the shared log spreadsheet.
+    </p>
+
+    <div style="background:#fee2e2; padding:16px; border-radius:12px; margin:24px 0; font-size:15px; line-height:1.7; color:#991b1b;">
+      <strong>What you can do:</strong><br><br>
+      
+      1. <strong>Ask to be added:</strong> Send your email to the team so they can grant you access.<br><br>
+      
+      2. <strong>Check the authorized list here →</strong><br>
+      <a href="https://docs.google.com/spreadsheets/d/1AQ4cvZ_SjbIkW-ZwJz2QbB_67Sepo4RUUtlkyNGsutE/edit#gid=388466886" 
+         target="_blank" 
+         style="color:#1d4ed8; text-decoration:underline; font-weight:600;">
+         Open Authorized Users Sheet
+      </a><br><br>
+      
+      3. <strong>Verify your access here →</strong><br>
+      <a href="https://docs.google.com/spreadsheets/d/1AQ4cvZ_SjbIkW-ZwJz2QbB_67Sepo4RUUtlkyNGsutE/edit#gid=59643720" 
+         target="_blank" 
+         style="color:#1d4ed8; text-decoration:underline; font-weight:600;">
+         Open Main Log Sheet (try editing)
+      </a>
+    </div>
+
+    <p style="margin:24px 0; color:#4b5563;">
+      After being added by the team, come back and try again.
+    </p>
+
+    <div style="display:flex; gap:12px; justify-content:center; margin-top:20px;">
+      <button class="btn ghost" onclick="location.reload()" style="min-width:140px;">
+        Try Again
+      </button>
+      <button class="btn primary" onclick="location.reload()" style="min-width:140px;">
+        Refresh & Sign In Again
+      </button>
+    </div>
+
+    <p style="margin-top:32px; font-size:13px; color:#6b7280;">
+      Need help? Contact Team RC
+    </p>
   </div>
 </div>
-
 <!-- Your entire existing app content goes here (unchanged) -->
 <div id="app" style="display:none;">
   <div class="shell">
