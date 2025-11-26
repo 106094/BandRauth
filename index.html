@@ -70,6 +70,8 @@
 <body>
 
 <!-- =============== LOGIN SCREEN =============== -->
+<script src="https://accounts.google.com/gsi/client" async defer onload="handleClientLoad()"></script>
+<script src="https://apis.google.com/js/api.js"></script>
 <div id="loginScreen">
   <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px;">
     <div class="card" style="text-align:center; max-width:400px; width:100%;">
@@ -205,9 +207,6 @@
   <div class="toast" id="toast"></div>
 </div>
 
-<!-- Google Sign-In SDK -->
-<script src="https://accounts.google.com/gsi/client" async defer onload="handleClientLoad()"></script>
-<script src="https://apis.google.com/js/api.js"></script>
 <script>
 // ================== CONFIG ==================          
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxxzwLaLKmP0ixib-GxiaKOvT8l_-0ZeIeJXOWyhktqEqaROAc_QeVKjTWclgFL-gWweA/exec';
