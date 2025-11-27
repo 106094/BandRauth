@@ -239,9 +239,8 @@ const i18n = {
         labelDate: "Date",
         labelName: "Name",
         phName: "Scan or type a name",
-        phID: "Scan or type a property ID",
+        phPropID: "Scan or type a property ID",
         labelPropID: "Property ID(s)",
-        phPropID: "Property ID",
         btnAddLine: "+ Add line",
         btnBack: "Back",
         btnConfirm: "Confirm / Submit",
@@ -286,9 +285,8 @@ const i18n = {
         labelDate: "日期",
         labelName: "姓名",
         phName: "掃描或輸入姓名",
-        phID: "掃描或輸入產編",
+        phPropID: "掃描或輸入產編",
         labelPropID: "產編",
-        phPropID: "產編",
         btnAddLine: "+ 新增一行",
         btnBack: "返回",
         btnConfirm: "確認 / 送出",
@@ -418,7 +416,7 @@ function addPropertyRow(value=''){
 
   row.innerHTML = `
     <div class="field col">
-      <input type="text" placeholder="${ph}" value="${value.replaceAll('"','&quot;')}" data-placeholder="phID" oninput="maybeAutogrow(this)">
+      <input type="text" placeholder="${ph}" value="${value.replaceAll('"','&quot;')}" data-placeholder="phPropID" oninput="maybeAutogrow(this)">
       <button class="icon-btn" aria-label="Scan Property" onclick="openScanner(null, this.previousElementSibling)">📷</button>
     </div>
     <button class="remove" title="Remove" onclick="removeRow(this)">✕</button>
