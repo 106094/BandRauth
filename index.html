@@ -92,14 +92,14 @@
       <div style="background:#fee2e2; padding:20px; border-radius:12px; margin:24px 0; font-size:15px; line-height:1.8; color:#991b1b; border-left:5px solid #dc2626;">
         <strong data-i18n="whatCanDo">What you can do:</strong><br><br>
         
-        1. <strong data-i18n="checkAuth">Check if you are already authorized. If yes, add your email in the sheet of "authnames"</strong><br>
+        <strong data-i18n="checkAuth">Check if you are already authorized. If yes, add your email in the sheet of "authnames"</strong><br>
         <a href="https://docs.google.com/spreadsheets/d/1AQ4cvZ_SjbIkW-ZwJz2QbB_67Sepo4RUUtlkyNGsutE/edit?gid=59643720" 
            target="_blank" 
            style="color:#1d4ed8; font-weight:600; text-decoration:underline;">
            <span data-i18n="openAuthList">Open Authorized Users List</span>
         </a><br><br>
         
-        2. <strong data-i18n="askRC">If you don't have right to edit, please check with your Team RC to add your email address to the authorized group</strong><br>
+        <strong data-i18n="askRC">If you don't have right to edit, please check with your Team RC to add your email address to the authorized group</strong><br>
         <a href="https://docs.google.com/spreadsheets/d/1AQ4cvZ_SjbIkW-ZwJz2QbB_67Sepo4RUUtlkyNGsutE/edit?gid=388466886" 
            target="_blank" 
            style="color:#1d4ed8; font-weight:600; text-decoration:underline;">
@@ -239,6 +239,7 @@ const i18n = {
         labelDate: "Date",
         labelName: "Name",
         phName: "Scan or type a name",
+        phID: "Scan or type a property ID",
         labelPropID: "Property ID(s)",
         phPropID: "Property ID",
         btnAddLine: "+ Add line",
@@ -285,8 +286,9 @@ const i18n = {
         labelDate: "日期",
         labelName: "姓名",
         phName: "掃描或輸入姓名",
-        labelPropID: "資產編號",
-        phPropID: "資產編號",
+        phID: "掃描或輸入產編",
+        labelPropID: "產編",
+        phPropID: "產編",
         btnAddLine: "+ 新增一行",
         btnBack: "返回",
         btnConfirm: "確認 / 送出",
@@ -297,7 +299,7 @@ const i18n = {
         toastTorchNotSup: "不支援手電筒",
         toastTorchFail: "手電筒開啟失敗",
         toastNameEmpty: "姓名不能為空",
-        toastIdEmpty: "請輸入至少一個資產編號",
+        toastIdEmpty: "請輸入至少一個產編",
         toastSubmitted: "已送出 {n} 個項目",
         toastSubmitFail: "送出失敗：",
         toastScanned: "掃描成功",
@@ -416,7 +418,7 @@ function addPropertyRow(value=''){
 
   row.innerHTML = `
     <div class="field col">
-      <input type="text" placeholder="${ph}" value="${value.replaceAll('"','&quot;')}" oninput="maybeAutogrow(this)">
+      <input type="text" placeholder="${ph}" value="${value.replaceAll('"','&quot;')}" data-placeholder="phID" oninput="maybeAutogrow(this)">
       <button class="icon-btn" aria-label="Scan Property" onclick="openScanner(null, this.previousElementSibling)">📷</button>
     </div>
     <button class="remove" title="Remove" onclick="removeRow(this)">✕</button>
